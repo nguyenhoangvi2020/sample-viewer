@@ -27,7 +27,7 @@ const App = () => {
   const fetchOrderData = async function () {
     console.log('fetching..');
 
-    const result = await client.request(readItems('orders'));
+    const result = await client.request(readItems('orders', { sort: ['-createdAt'] } ));
 
     console.log(result);
     setOrders(result);
@@ -126,7 +126,7 @@ const App = () => {
                 Tài xế: {order.driverMobileNumber}<br />
                 Khách hàng: {order.eaterName}<br />
                 Địa chỉ: {order.eaterAddress}<br />                
-                <PhoneOutlined />: {order.eaterName}<br />
+                <PhoneOutlined />: {order.eaterMobileNumber}<br />
                 Tổng số món: {order.orderJsonData.itemInfo.count}<br />
                 Tổng tiền: {order.revampedSubtotalDisplayX}<br />
                 Tiền Sau khuyến mãi: {order.totalDisplayX}<br />    
