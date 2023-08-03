@@ -60,21 +60,24 @@ const App = () => {
     doc.line(0, 4.7, 50, 4.7)
     doc.line(0, 25, 50, 25)
 
-    doc.text('Grab Pay=' + data.fare.totalDisplay + '-25%', 2, 28)
+    //doc.text('Grab Pay=' + data.fare.totalDisplay + '-25%', 2, 28)
+    doc.text('Hotline(zalo) - 0777.369.959', 2, 28)
 
     doc.setFontSize(6)
     doc.setFont('arial', 'normal')
-    doc.text('Driver: ' + data.driver.name, 3, 7)
-    doc.text('Phone: ' + data.driver.mobileNumber, 3, 9)
+    doc.text('Tài xế: ' + data.driver.name, 3, 7)
+    // doc.text('Phone: ' + data.driver.mobileNumber, 3, 9)
 
     doc.setFont('arial', 'normal')
 
     if (data.eater.comment) {
       doc.text(3, 12, "' " + data.eater.comment + " '", { maxWidth: 44 })
     } else {
-      doc.setFont('times', 'italic')
-      doc.setFontSize(12)
-      doc.text(12, 17, 'Thanks you!')
+      //doc.setFont('times', 'italic')
+      doc.setFont('arial', 'normal')
+      doc.setFontSize(11)
+      //doc.text(12, 17, 'CHABAR cảm ơn quý khách rất nhiều!')
+      doc.text(3, 12, 'CHABAR Cảm ơn quý khách rất nhiều! Chúng mình luôn lắng nghe ♡', { maxWidth: 44 })
     }
     var itemCount = 0
     data.itemInfo.items.forEach((item, index) => {
@@ -84,10 +87,15 @@ const App = () => {
         doc.addPage('l', 'mm', [50, 30])
         doc.setFont('arial', 'normal')
         doc.setFontSize(8)
-
-        doc.text(2, 4, i + '/' + item.quantity + 'x' + item.name, {
-          maxWidth: 44,
-        })
+        if (item.quantity>1){
+          doc.text(2, 4, i + '_' + item.quantity + 'x' + item.name, {
+            maxWidth: 46,
+          })
+        } else{
+          doc.text(2, 4, item.quantity + 'x' + item.name, {
+            maxWidth: 46,
+          })
+        }
 
         doc.setLineWidth(0.2)
         doc.line(0, 4.7, 50, 4.7)
@@ -108,7 +116,7 @@ const App = () => {
         var toppings = 'Note: ' + item.comment + '\n'
         // eslint-disable-next-line no-loop-func
         item.modifierGroups.forEach((toppingGroup) => {
-          toppings += '+ ' + toppingGroup.modifierGroupName + '\n'
+          //toppings += '+ ' + toppingGroup.modifierGroupName + '\n'
           toppingGroup.modifiers.forEach((toppingItem) => {
             toppings +=
               '    -' +
