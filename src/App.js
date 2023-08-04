@@ -28,6 +28,24 @@ jsPDF.API.events.push(['addFonts', callAddFont])
 
 const App = () => {
   const [orders, setOrders] = useState([])
+  
+  const [loadings, setLoadings] = useState([]);
+  const enterLoading = async (index) => {
+    setLoadings((prevLoadings) => {
+      const newLoadings = [...prevLoadings];
+      newLoadings[index] = true;
+      return newLoadings;
+    });
+    await getNewOrders();
+    
+    setLoadings((prevLoadings) => {
+      const newLoadings = [...prevLoadings];
+      newLoadings[index] = false;
+      return newLoadings;
+    });
+    
+  };
+
 
   const fetchOrderData = async function () {
     console.log('fetching..')
@@ -36,8 +54,28 @@ const App = () => {
       readItems('orders', { sort: ['-createdAt'], limit: 12 }),
     )
 
-    console.log(result)
+    //console.log(result)
     setOrders(result)
+  }
+
+  const getNewOrders = async function () {
+    console.log('updateing..' + orders.length)
+    
+    const lastestOrder = orders[0];
+    console.log('updateing..' + lastestOrder.displayID + " --- " + lastestOrder.createdAt) 
+
+    const newOrders = await client.request(
+      readItems('orders', { 
+        sort: ['-createdAt'],         
+        filter:{
+          'createdAt': {
+            "_gt" : lastestOrder.createdAt
+          }
+        }
+      }),
+    )
+    
+    setOrders(orders => [...newOrders, ...orders])    
   }
 
   useEffect(() => {
@@ -156,49 +194,18 @@ const App = () => {
           position: 'sticky',
           top: 0,
           zIndex: 1,
-          width: '100%',
-          display: 'none',
+          width: '100%',          
           alignItems: 'center',   
           background:'	#9dc451',       
         }}
         theme= 'light'
       >
         <div className="demo-logo" />
-        <Anchor
-        direction="horizontal"
-        items={[
-          {
-            key: 'part-1',
-            href: '#part-1',
-            title: 'Part 1',
-          },
-          {
-            key: 'part-2',
-            href: '#part-2',
-            title: 'Part 2',
-          },
-          {
-            key: 'part-3',
-            href: '#part-3',
-            title: 'Part 3',
-          },
-          {
-            key: 'part-4',
-            href: '#part-4',
-            title: 'Part 4',
-          },
-          {
-            key: 'part-5',
-            href: '#part-5',
-            title: 'Part 5',
-          },
-          {
-            key: 'part-6',
-            href: '#part-6',
-            title: 'Part 6',
-          },
-        ]}
-      />
+        
+        <Button type="primary" loading={loadings[0]} onClick={() => enterLoading(0)}>
+          Update Now
+        </Button>
+
       </Header>
       <Content
         style={{
