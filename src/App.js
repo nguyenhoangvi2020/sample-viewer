@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react'
+
 import { Card, Col, Row } from 'antd'
+import { Switch, Typography } from 'antd'
+
 import { Button, Space } from 'antd'
 import { Breadcrumb, Layout, Menu, theme } from 'antd'
 import { Anchor } from 'antd';
+
 import { UserSwitchOutlined, PhoneOutlined } from '@ant-design/icons'
 
 import './App.css'
@@ -13,6 +17,7 @@ import { jsPDF } from 'jspdf'
 import moment from 'moment'
 
 const { Header, Content, Footer } = Layout
+const { Paragraph, Text } = Typography
 
 const client = createDirectus(
   'https://directus-production-2ee7.up.railway.app',
@@ -78,6 +83,11 @@ const App = () => {
     setOrders(orders => [...newOrders, ...orders])    
   }
 
+  window.onfocus = function () { 
+    console.log("on focus....");
+    enterLoading(0);
+  }; 
+
   useEffect(() => {
     console.log('effect..')
     document.title = 'CHABAR FOOD APP'
@@ -108,15 +118,42 @@ const App = () => {
 
     doc.setFont('arial', 'normal')
 
+   
+    //doc.setFont('times', 'italic')
+    doc.setFont('arial', 'normal')
+    doc.setFontSize(11)
+    //doc.text(12, 17, 'CHABAR cảm ơn quý khách rất nhiều!')
+    doc.text(3, 12, 'CHABAR Cảm ơn quý khách rất nhiều! Chúng mình luôn lắng nghe ♡', { maxWidth: 44 })
+  
     if (data.eater.comment) {
-      doc.text(3, 12, "' " + data.eater.comment + " '", { maxWidth: 44 })
-    } else {
+      
+        doc.addPage('l', 'mm', [50, 30])
+        doc.setFont('arial', 'bold')
+      doc.setFontSize(10)
+
+      doc.text('CODE: ' + data.displayID, 2, 4)
+      doc.text('Qty: ' + data.itemInfo.count, 30, 4)
+      doc.setLineWidth(0.2)
+      doc.line(0, 4.7, 50, 4.7)
+      doc.line(0, 25, 50, 25)
+
+      //doc.text('Grab Pay=' + data.fare.totalDisplay + '-25%', 2, 28)
+      doc.text('Hotline(zalo) - 0777.369.959', 2, 28)
+
+      // doc.setFontSize(9)
+      // doc.setFont('arial', 'normal')
+      // doc.text('LƯU Ý KHÁCH NOTE:', 2.7, 8.5)
+      
+      doc.setFontSize(7)
+      doc.setFont('arial', 'normal')
+      doc.text('Tài xế & quán nhớ đọc kỹ!', 9, 24)
+      
       //doc.setFont('times', 'italic')
       doc.setFont('arial', 'normal')
-      doc.setFontSize(11)
-      //doc.text(12, 17, 'CHABAR cảm ơn quý khách rất nhiều!')
-      doc.text(3, 12, 'CHABAR Cảm ơn quý khách rất nhiều! Chúng mình luôn lắng nghe ♡', { maxWidth: 44 })
-    }
+      doc.setFontSize(8)
+      doc.text(3, 9, "Lưu ý: '  " + data.eater.comment + " '", { maxWidth: 44 })
+    } 
+
     var itemCount = 0
     data.itemInfo.items.forEach((item, index) => {
       for (let i = 1; i <= item.quantity; i++) {
@@ -151,7 +188,8 @@ const App = () => {
           28,
         )
 
-        var toppings = 'Note: ' + item.comment + '\n'
+        var toppings = '';
+        if (item.comment) toppings += 'Note: ' + item.comment + '\n'
         // eslint-disable-next-line no-loop-func
         item.modifierGroups.forEach((toppingGroup) => {
           //toppings += '+ ' + toppingGroup.modifierGroupName + '\n'
@@ -167,7 +205,7 @@ const App = () => {
 
         doc.setFontSize(6)
         doc.setFont('arial', 'normal')
-        doc.text(4, 7, toppings, { maxWidth: 44 })
+        doc.text(4, 9, toppings, { maxWidth: 44 })
       }
     })
 
@@ -229,11 +267,15 @@ const App = () => {
                       .local()
                       .format('HH:mm - DD-MM')}
                     bordered={false}
-                  >
-                    KH: {order.eaterName}
-                    <br />
+                  >                   
+                    
+                    <Paragraph ellipsis={{rows: 4,expandable: true,symbol: 'more'}}>
+                    KH: {order.eaterName}<br/>
                     X: {order.eaterAddress}
-                    <br />
+                   </Paragraph>
+
+                    
+                   
                     <PhoneOutlined />: {order.eaterMobileNumber}
                     <br />
                     <hr />
@@ -247,14 +289,17 @@ const App = () => {
                     <br />
                     Tiền Sau KM: {order.totalDisplayX}
                     <br />
-                    <Space wrap>
-                      <Button
-                        type="primary"
-                        onClick={() => printOrderLabels(order.orderJsonData)}
-                      >
-                        Print Label
-                      </Button>
-                    </Space>
+                    <div className="space-align-container">
+    <div className="space-align-block">
+                      <Space align="center"> 
+                        <Button
+                          type="primary"
+                          onClick={() => printOrderLabels(order.orderJsonData)}
+                        >
+                          Print Label
+                        </Button>
+                      </Space>
+                      </div></div>
                   </Card>
                 </Col>
               ))}
@@ -266,7 +311,7 @@ const App = () => {
           textAlign: 'center',
         }}
       >
-        Ant Design ©2023 Created by Ant UED
+        ©2023 Created by Mr.Vi
       </Footer>
     </Layout>
   )
