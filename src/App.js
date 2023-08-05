@@ -151,7 +151,7 @@ const App = () => {
       //doc.setFont('times', 'italic')
       doc.setFont('arial', 'normal')
       doc.setFontSize(8)
-      doc.text(3, 9, "Lưu ý: '  " + data.eater.comment + " '", { maxWidth: 44 })
+      doc.text(3, 9, "Khách NOTE: '  " + data.eater.comment + " '", { maxWidth: 44 })
     } 
 
     var itemCount = 0
