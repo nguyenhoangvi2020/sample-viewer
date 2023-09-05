@@ -163,7 +163,7 @@ const App = () => {
     doc.setFont('arial', 'bold')
     doc.setFontSize(10)
 
-    doc.text('CODE: ' + data.displayID, 2, 4)
+    doc.text('GRAB: ' + data.displayID, 2, 4)
     doc.text('Qty: ' + data.itemInfo.count, 30, 4)
     doc.setLineWidth(0.2)
     doc.line(0, 4.7, 50, 4.7)
@@ -192,7 +192,7 @@ const App = () => {
         doc.setFont('arial', 'bold')
       doc.setFontSize(10)
 
-      doc.text('CODE: ' + data.displayID, 2, 4)
+      doc.text('GRAB: ' + data.displayID, 2, 4)
       doc.text('Qty: ' + data.itemInfo.count, 30, 4)
       doc.setLineWidth(0.2)
       doc.line(0, 4.7, 50, 4.7)
@@ -207,12 +207,12 @@ const App = () => {
       
       doc.setFontSize(7)
       doc.setFont('arial', 'normal')
-      doc.text('Tài xế & quán nhớ đọc kỹ!', 9, 24)
+      doc.text('Team CHABAR lưu ý!', 9, 24)
       
       //doc.setFont('times', 'italic')
       doc.setFont('arial', 'normal')
       doc.setFontSize(8)
-      doc.text(3, 9, "Khách NOTE: '  " + data.eater.comment + " '", { maxWidth: 44 })
+      doc.text(3, 9, "GHI CHÚ: '  " + data.eater.comment + " '", { maxWidth: 44 })
     } 
 
     var itemCount = 0
@@ -238,7 +238,7 @@ const App = () => {
         doc.line(0, 25, 50, 25)
 
         doc.text(
-          'ORDER: ' +
+          'GRAB: ' +
             data.displayID +
             ' (' +
             itemCount +
@@ -332,7 +332,9 @@ const App = () => {
                     
                     <Paragraph ellipsis={{rows: 4,expandable: true,symbol: 'more'}}>
                     KH: {order.eaterName}<br/>
-                    X: {order.eaterAddress}
+                    X: 
+                    <a target='_blank' href={"https://www.google.com/maps/dir/392+Nguy%E1%BB%85n+V%C4%83n+Nghi,+Ph%C6%B0%E1%BB%9Dng+7,+G%C3%B2+V%E1%BA%A5p,+Ho+Chi+Minh+City/" + order.eaterAddress.replaceAll(" ", "+").replaceAll("/", "%2F")+ "/?entry=ttu"}>{order.eaterAddress}</a>
+                    
                    </Paragraph>
 
                     
