@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 
-import { Card, Col, Row } from 'antd'
-import { Switch, Typography } from 'antd'
+import { Card,List, Col, Row } from 'antd'
+import { Switch, Typography,Divider ,Tag, Tooltip} from 'antd'
 
 import { Button, Space } from 'antd'
 import { Breadcrumb, Layout, Menu, theme } from 'antd'
 import { Anchor } from 'antd';
 
-import { UserSwitchOutlined, PhoneOutlined } from '@ant-design/icons'
+import { UserSwitchOutlined, PhoneOutlined,EnvironmentOutlined,UserAddOutlined } from '@ant-design/icons'
 
 import './App.css'
 
@@ -117,10 +117,38 @@ const App = () => {
     console.log('fetching..')
 
     const result = await client.request(
-      readItems('orders', { sort: ['-createdAt'], limit: 36 }),
+      readItems('orders', { sort: ['-createdAt'], limit: 48 }),
     )
 
-    //console.log(result)
+    //Get important note
+    for (let i = 0; i < result.length; i++) {
+      if (i>10) break;
+
+      var order = result[i];
+    
+
+      const indexOfFirst =  order.orderId.indexOf('-');
+      var customerId = order.orderId.substring(0,indexOfFirst)
+      console.log("get important note for... " + customerId);
+      const myOrders = await client.request(
+        readItems('customerCare', {
+          filter: {
+            customerId: {
+              _eq: customerId,
+            },
+          },
+        })
+      );
+      //console.log(myOrders);
+      order.importantNote = myOrders[0]?myOrders[0].importantNote:"";
+      order.specialNote = myOrders[0]?myOrders[0].specialNote:"";
+      
+
+   
+
+    }
+
+    
     setOrders(result)
   }
 
@@ -140,6 +168,29 @@ const App = () => {
         }
       }),
     )
+
+    //Get important note
+      for (let i = 0; i < newOrders.length; i++) {
+        //if (i>10) break;
+
+        var order = newOrders[i];
+        
+        const indexOfFirst =  order.orderId.indexOf('-');
+        var customerId = order.orderId.substring(0,indexOfFirst)
+        console.log("get important note for... " + customerId);
+        const myOrders = await client.request(
+          readItems('customerCare', {
+            filter: {
+              customerId: {
+                _eq: customerId,
+              },
+            },
+          })
+        );
+        //console.log(myOrders);
+        order.importantNote = myOrders[0]?myOrders[0].importantNote:"";
+        order.specialNote = myOrders[0]?myOrders[0].specialNote:"";
+      }
     
     setOrders(orders => [...newOrders, ...orders])    
   }
@@ -174,7 +225,8 @@ const App = () => {
 
     doc.setFontSize(6)
     doc.setFont('arial', 'normal')
-    doc.text('Tài xế: ' + data.driver.name, 3, 7)
+    var driverName = data.driver?data.driver.name:"............"
+    doc.text('Tài xế: ' + driverName, 3, 7)
     // doc.text('Phone: ' + data.driver.mobileNumber, 3, 9)
 
     doc.setFont('arial', 'normal')
@@ -314,59 +366,101 @@ const App = () => {
       >
         
         <div>
-          <Row gutter={16}>
-            {orders.length > 0 &&
-              orders.map((order) => (
-                <Col span={4} key={order.orderId}>
-                  <Card
+         
+
+          <List
+    grid={{
+      gutter: 16,
+      xs: 2,
+      sm: 3,
+      md: 4,
+      lg: 6,
+      xl: 6,
+      xxl: 8,
+    }}
+    dataSource={orders}
+    renderItem={(order) => (
+      <List.Item>
+        <Card
                     style={{
-                      margin: '10px 0 0 0'
+                      margin: '5px 0 0 0'
                     }}
                     title={order.displayID}
                     extra={moment
                       .utc(order.createdAt)
                       .local()
-                      .format('HH:mm - DD-MM')}
+                      .format('HH:mm DD/MM')}
                     bordered={false}
-                  >                   
-                    
-                    <Paragraph ellipsis={{rows: 4,expandable: true,symbol: 'more'}}>
-                    KH: {order.eaterName}<br/>
-                    X: 
-                    <a target='_blank' href={"https://www.google.com/maps/dir/392+Nguy%E1%BB%85n+V%C4%83n+Nghi,+Ph%C6%B0%E1%BB%9Dng+7,+G%C3%B2+V%E1%BA%A5p,+Ho+Chi+Minh+City/" + order.eaterAddress.replaceAll(" ", "+").replaceAll("/", "%2F")+ "/?entry=ttu"}>{order.eaterAddress}</a>
-                    
-                   </Paragraph>
+                  >       
+                  <UserAddOutlined /> {order.eaterName}<br/>
+                 
+                    <PhoneOutlined />{order.eaterMobileNumber}<br/>    
+                    <Paragraph style={{
+                      backgroundColor: '#ff7a45'
+                    }}>
+                      {order.importantNote}
+                    </Paragraph>
+                    <Paragraph style={{
+                      backgroundColor: '#bae0ff'
+                    }}>
+                    {order.specialNote}
+                    </Paragraph>
+
+                    {/* <Paragraph style={{
+                      backgroundColor: '#bae0ff'
+                    }}>
+                    {order.warning}
+                    </Paragraph>
+                     */}
 
                     
+                  
+                    <Paragraph>
+                    <EnvironmentOutlined />
+                    {
+                        order.eaterAddress.includes("Gò Vấp")|order.eaterAddress.includes("Go Vap")? 
+                        <Tooltip title={order.eaterAddress.replace(", 70000","").replace(", 700000","").replace(", Vietnam","")}>
+                          <span>OK-Gò Vấp</span>
+                        </Tooltip>:
+                        <a target='_blank' href={"https://www.google.com/maps/dir/392+Nguy%E1%BB%85n+V%C4%83n+Nghi,+Ph%C6%B0%E1%BB%9Dng+7,+G%C3%B2+V%E1%BA%A5p,+Ho+Chi+Minh+City/" + order.eaterAddress.replaceAll(" ", "+").replaceAll("/", "%2F")+ "/?entry=ttu"}>{order.eaterAddress.replace(", 70000","").replace(", 700000","").replace(", Vietnam","")}</a>
+                    } 
+
+                    
+                    
+                    
+                   </Paragraph>
                    
-                    <PhoneOutlined />: {order.eaterMobileNumber}
-                    <br />
+                  
+
+                    <div className="space-align-container">
+                      <div className="space-align-block">
+                        <Space align="center"> 
+                          <Button
+                            type="primary"
+                            onClick={() => printOrderLabels(order.orderJsonData)}
+                          >
+                            Print Label
+                          </Button>
+                        </Space>
+                        </div>
+                      </div>
+
                     <hr />
                     <UserSwitchOutlined /> {order.driverName} <br />
-                    Tài xế: {order.driverMobileNumber}
-                    <br />
-                    <hr />
-                    Tổng số món: {order.orderJsonData.itemInfo.count}
-                    <br />
-                    Tổng tiền: {order.revampedSubtotalDisplayX}
-                    <br />
-                    Tiền Sau KM: {order.totalDisplayX}
-                    <br />
-                    <div className="space-align-container">
-    <div className="space-align-block">
-                      <Space align="center"> 
-                        <Button
-                          type="primary"
-                          onClick={() => printOrderLabels(order.orderJsonData)}
-                        >
-                          Print Label
-                        </Button>
-                      </Space>
-                      </div></div>
+                    Tài xế: {order.driverMobileNumber}<br/>
+                    
+                    
+                    <Tag color="magenta">{order.orderJsonData.itemInfo.count} Món</Tag>
+      <Tag color="red">{order.totalDisplayX} vnđ</Tag>
+                    
+
+      
+                    
                   </Card>
-                </Col>
-              ))}
-          </Row>
+      </List.Item>
+    )}
+  />
+
         </div>
       </Content>
       <Footer

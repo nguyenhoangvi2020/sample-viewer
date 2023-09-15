@@ -53,3 +53,24 @@
   padding: 32px 8px 16px;
   background: rgba(150, 150, 150, 0.2);
 }
+
+
+#root .ant-list .ant-row > div,
+#root .ant-list .ant-row .ant-col:first-child {
+  display: flex;
+}
+#root .ant-list .ant-row .ant-list-item {
+  flex: 1 1 auto;
+}
+#root .ant-list .ant-row .ant-list-item .ant-card {
+  height: 100%;
+}
+
+#root .ant-list .ant-row .ant-list-item .ant-card .ant-card-body{
+  padding:8px;
+}
+
+#root .ant-list .ant-row .ant-list-item .ant-card .ant-card-head{
+  padding:8px;
+}
+
