@@ -394,7 +394,7 @@ const App = () => {
                   >       
                   <UserAddOutlined /> {order.eaterName}<br/>
                  
-                    {/* <PhoneOutlined />{order.eaterMobileNumber}<br/>     */}
+                    <PhoneOutlined  />{order.eaterMobileNumber}<br/>    
                     <Paragraph style={{
                       backgroundColor: '#ff7a45'
                     }}>
@@ -416,14 +416,14 @@ const App = () => {
                     
                   
                     <Paragraph>
-                    {/* <EnvironmentOutlined />
+                    <EnvironmentOutlined />
                     {
                         order.eaterAddress.includes("Gò Vấp")|order.eaterAddress.includes("Go Vap")? 
                         <Tooltip title={order.eaterAddress.replace(", 70000","").replace(", 700000","").replace(", Vietnam","")}>
                           <span>OK-Gò Vấp</span>
                         </Tooltip>:
                         <a target='_blank' href={"https://www.google.com/maps/dir/392+Nguy%E1%BB%85n+V%C4%83n+Nghi,+Ph%C6%B0%E1%BB%9Dng+7,+G%C3%B2+V%E1%BA%A5p,+Ho+Chi+Minh+City/" + order.eaterAddress.replaceAll(" ", "+").replaceAll("/", "%2F")+ "/?entry=ttu"}>{order.eaterAddress.replace(", 70000","").replace(", 700000","").replace(", Vietnam","")}</a>
-                    }  */}
+                    } 
 
                     
                     
@@ -447,7 +447,7 @@ const App = () => {
 
                     <hr />
                     <UserSwitchOutlined /> {order.driverName} <br />
-                    {/* Tài xế: {order.driverMobileNumber}<br/> */}
+                    Tài xế: {order.driverMobileNumber}<br/>
                     
                     
                     <Tag color="magenta">{order.orderJsonData.itemInfo.count} Món</Tag>
