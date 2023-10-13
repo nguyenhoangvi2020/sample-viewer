@@ -20,7 +20,7 @@ const { Header, Content, Footer } = Layout
 const { Paragraph, Text } = Typography
 
 const client = createDirectus(
-  'https://directus-production-2ee7.up.railway.app',
+  'https://directus-production-c94b.up.railway.app',
 ).with(rest())
 
 var font =
@@ -117,12 +117,12 @@ const App = () => {
     console.log('fetching..')
 
     const result = await client.request(
-      readItems('orders', { sort: ['-createdAt'], limit: 48 }),
+      readItems('orders', { sort: ['-createdAt'], limit: 20 }),
     )
 
     //Get important note
     for (let i = 0; i < result.length; i++) {
-      if (i>10) break;
+      if (i>3) break;
 
       var order = result[i];
     
