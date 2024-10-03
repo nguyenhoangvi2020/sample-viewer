@@ -394,7 +394,7 @@ const App = () => {
                   >       
                   <UserAddOutlined /> {order.eaterName}<br/>
                  
-                    {/* <PhoneOutlined />{order.eaterMobileNumber}<br/>     */}
+                    <PhoneOutlined />{order.eaterMobileNumber}<br/>
                     <Paragraph style={{
                       backgroundColor: '#ff7a45'
                     }}>
