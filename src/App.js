@@ -21,6 +21,7 @@ const { Paragraph, Text } = Typography
 
 const client = createDirectus(
   'https://directus-starter-production.up.railway.app',
+  'https://directus-starter-production.up.railway.app',
 ).with(rest())
 
 var font =
@@ -394,7 +395,7 @@ const App = () => {
                   >       
                   <UserAddOutlined /> {order.eaterName}<br/>
                  
-                    <PhoneOutlined />{order.eaterMobileNumber}<br/>
+                    {/* <PhoneOutlined />{order.eaterMobileNumber}<br/>     */}
                     <Paragraph style={{
                       backgroundColor: '#ff7a45'
                     }}>
