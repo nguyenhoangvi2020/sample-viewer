@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+</head>
+<body>
+    <h1>Order Information</h1>
+    <div id="order-details">
+        <p>Loading order details...</p>
+    </div>
+
+    <script>
+        // Lấy ID từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderID = urlParams.get('ID');
+
+        // Kiểm tra xem ID có hợp lệ không
+        if (orderID) {
+            // Gọi API và lấy dữ liệu dựa trên ID
+            fetch(`http://myapi.com?ID=${orderID}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Hiển thị dữ liệu ra trang web
+                    const orderDetailsDiv = document.getElementById('order-details');
+                    orderDetailsDiv.innerHTML = `
+                        <h2>Order ID: ${data.orderID}</h2>
+                        <h3>Eater Information:</h3>
+                        <p>Name: ${data.eater.name}</p>
+                        <p>Mobile: ${data.eater.mobileNumber}</p>
+                        <p>Address: ${data.eater.address.address}</p>
+                        
+                        <h3>Items:</h3>
+                        <ul>
+                            ${data.itemInfo.items.map(item => `
+                                <li>
+                                    <strong>${item.name}</strong> - ${item.quantity} x ${item.fare.priceDisplay}
+                                    <ul>
+                                        ${item.modifierGroups.map(group => `
+                                            <li>${group.modifierGroupName}: 
+                                                ${group.modifiers.map(mod => mod.modifierName).join(', ')}
+                                            </li>
+                                        `).join('')}
+                                    </ul>
+                                </li>
+                            `).join('')}
+                        </ul>
+
+                        <h3>Total Price: ${data.fare.totalDisplay}</h3>
+                    `;
+                })
+                .catch(error => {
+                    document.getElementById('order-details').innerHTML = `<p>Error fetching order details.</p>`;
+                    console.error('Error:', error);
+                });
+        } else {
+            document.getElementById('order-details').innerHTML = `<p>Invalid or missing ID in URL.</p>`;
+        }
+    </script>
+</body>
+</html>
