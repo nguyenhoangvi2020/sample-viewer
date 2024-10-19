@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Voucher</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        #canvas {
+            border: 1px solid #000;
+            margin-top: 20px;
+        }
+        #download-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chương trình QR Voucher 2024 by Vi Nguyễn</h1>
+
+    <canvas id="canvas" width="400" height="600"></canvas>
+    <br>
+    <button id="download-btn">Download QR Code</button>
+
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <script>
+        // Function to get URL parameters
+        function getQueryParams() {
+            const params = new URLSearchParams(window.location.search);
+            return {
+                qrcode: params.get('qrcode') || '123456',
+                campaign: params.get('campaign') || 'Default Campaign',
+                logoUrl: params.get('logo-url') || 'logo.png',
+                message: params.get('message') || 'Default message'
+            };
+        }
+
+        console.log("222");
+
+        // Function to draw QR code
+        function drawQRCodeWithLogo(qrText, campaignText, logoUrl, messageText) {
+            const canvas = document.getElementById('canvas');
+            const ctx = canvas.getContext('2d');
+
+            // Generate QR Code with high error correction level
+            const qrCode = new QRCode(document.createElement('div'), {
+                text: qrText,
+                width: 300,
+                height: 300,
+                correctLevel: QRCode.CorrectLevel.H // High error correction
+            });
+
+            // Convert QR code to canvas
+            const qrCanvas = qrCode._oDrawing._elCanvas;
+            const qrImage = new Image();
+            qrImage.src = qrCanvas.toDataURL();
+
+            
+
+            qrImage.onload = () => {
+                // Clear the canvas
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                //ctx.fillStyle = '#000'; // Màu xanh lá
+                //ctx.fillRect(0, 0, canvas.width, canvas.height); // Vẽ nền cho toàn bộ canvas
+
+                
+
+                // Create a white square in the middle for the logo
+                const logoSize = 80; // Size of the logo
+                const x = canvas.width / 2 - logoSize / 2;
+                const y = 250 - logoSize / 2; // Center within QR code
+
+                // Draw a white rectangle in the middle to create space for the logo
+                ctx.fillStyle = 'white';
+                ctx.fillRect(x, y, logoSize, logoSize);
+
+                const patternCanvas = document.createElement('canvas');
+                const patternCtx = patternCanvas.getContext('2d');
+
+                // Kích thước của hình nền nhỏ hơn
+                const patternSize = 30; // Kích thước hình nền
+
+                patternCanvas.width = patternSize;
+                patternCanvas.height = patternSize;
+
+                const bgImage = new Image();
+            
+                bgImage.src = logoUrl; // Đường dẫn hình nền
+                bgImage.onload = () => {
+                    
+                    //const pattern = ctx.createPattern(bgImage, 'repeat'); // Lặp lại hình nền
+                    patternCtx.drawImage(bgImage, 0, 0, patternSize, patternSize);
+                    const pattern = ctx.createPattern(patternCanvas, 'repeat');
+
+    // Tạo canvas tạm thời để vẽ pattern với độ mờ và xoay
+    const tempCanvas = document.createElement('canvas');
+    const tempCtx = tempCanvas.getContext('2d');
+    tempCanvas.width = patternSize;
+    tempCanvas.height = patternSize;
+
+    // Vẽ pattern với độ mờ
+    tempCtx.globalAlpha = 0.3; // Độ mờ (0.0 - hoàn toàn trong suốt, 1.0 - hoàn toàn không trong suốt)
+    tempCtx.fillStyle = pattern;
+    tempCtx.fillRect(0, 0, patternSize, patternSize);
+
+    // Xoay pattern 45 độ
+    
+    tempCtx.fillStyle = tempCtx.createPattern(tempCanvas, 'repeat');
+    tempCtx.translate(patternSize / 2, patternSize / 2);
+    tempCtx.rotate(45 * Math.PI / 180);
+    tempCtx.translate(-patternSize / 2, -patternSize / 2);
+
+    // Vẽ pattern lên canvas chính, đảm bảo không che khu vực mã QR và logo
+    ctx.save();
+    ctx.translate(0, 0); // Vị trí để vẽ pattern
+    ctx.fillStyle = tempCtx.createPattern(tempCanvas, 'repeat');
+    ctx.fillRect(0, 0, canvas.width , canvas.height );
+    ctx.restore();
+
+                    // ctx.fillStyle = pattern;
+                    // ctx.fillRect(0, 0, canvas.width , canvas.height ); // Vẽ hình nền lặp lại trong vùng logo
+
+                    
+
+                    // Draw the QR code on the canvas
+                    ctx.drawImage(qrImage, 50, 100, 300, 300);
+
+                    ctx.drawImage(bgImage, x, y, logoSize, logoSize);
+
+                    
+                };
+
+                
+
+                // Load and draw the logo in the center
+                // const logoImage = new Image();
+                // logoImage.src = logoUrl;
+                // logoImage.onload = () => {
+                //     ctx.drawImage(logoImage, x, y, logoSize, logoSize);
+                // };
+
+                // Draw the campaign text on top of the QR code
+                ctx.font = '25px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillStyle = 'black';
+                ctx.fillText(campaignText, canvas.width / 2, 70);
+
+                // Draw the message text below the QR code
+                ctx.font = '20px Arial';
+                ctx.fillText(messageText, canvas.width / 2, 450); // Adjust position to be below QR code
+            };
+        }
+
+        // Get URL parameters
+        const params = getQueryParams();
+
+        // Draw the QR code with logo, title, and message
+        drawQRCodeWithLogo(params.qrcode, params.campaign, params.logoUrl, params.message);
+
+        // Add event listener to download button
+        document.getElementById('download-btn').addEventListener('click', function() {
+            const canvas = document.getElementById('canvas');
+            const link = document.createElement('a');
+            link.download = 'i-voucher-' + params.qrcode + '.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+    </script>
+</body>
+</html>

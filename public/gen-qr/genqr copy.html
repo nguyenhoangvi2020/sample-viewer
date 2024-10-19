@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        #canvas {
+            border: 1px solid #000;
+            margin-top: 20px;
+        }
+        #download-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chương trình QR Voucher 2024 by Vi Nguyễn</h1>
+    <canvas id="qrCanvas"></canvas>
+    <br>
+    <button id="download-btn">Download QR Code</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator/qrcode.min.js"></script>
+    <script>
+        // Tham số cấu hình
+        const canvas = document.getElementById('qrCanvas');
+        const ctx = canvas.getContext('2d');
+        const logoSize = 60; // Kích thước của logo chính giữa mã QR
+        const qrSize = 300;   // Kích thước mã QR
+        const patternSize = 30; // Kích thước pattern lặp lại
+        canvas.width = qrSize + 50;
+        canvas.height = qrSize + 140; // Thêm không gian cho thông điệp
+
+        // Lấy tham số từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const qrcodeText = urlParams.get('qrcode') || '123456';
+        const campaign = urlParams.get('campaign') || 'Default Campaign';
+        const logoUrl = urlParams.get('logo-url') || 'logo.png';
+        const message = urlParams.get('message') || 'Default message';
+
+        // Tạo mã QR
+        const qr = qrcode(0, 'L');
+        qr.addData(qrcodeText);
+        qr.make();
+
+        
+
+        const qrCodeImage = new Image();
+        qrCodeImage.src = qr.createDataURL();
+
+        qrCodeImage.onload = () => {
+            // Vẽ nền xanh lá
+            ctx.fillStyle = '#00FF00'; // Màu xanh lá
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Tạo pattern với logo
+            const patternCanvas = document.createElement('canvas');
+            const patternCtx = patternCanvas.getContext('2d');
+            patternCanvas.width = patternSize;
+            patternCanvas.height = patternSize;
+
+            const bgImage = new Image();
+            bgImage.src = logoUrl;
+            bgImage.onload = () => {
+                // Vẽ logo lên pattern canvas
+                patternCtx.globalAlpha = 0.3; // Mờ 30%
+                patternCtx.drawImage(bgImage, 0, 0, patternSize, patternSize);
+
+                // Xoay pattern 45 độ
+                const tempCanvas = document.createElement('canvas');
+                const tempCtx = tempCanvas.getContext('2d');
+                tempCanvas.width = patternSize;
+                tempCanvas.height = patternSize;
+                tempCtx.save();
+                tempCtx.translate(patternSize / 2, patternSize / 2);
+                tempCtx.rotate(45 * Math.PI / 180);
+                tempCtx.translate(-patternSize / 2, -patternSize / 2);
+                tempCtx.drawImage(patternCanvas, 0, 0, patternSize, patternSize);
+                tempCtx.restore();
+
+                // Tạo pattern lặp lại
+                const rotatedPattern = ctx.createPattern(tempCanvas, 'repeat');
+
+                // Vẽ pattern lên canvas chính, không đè lên mã QR và logo
+                ctx.fillStyle = rotatedPattern;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Vẽ mã QR
+                ctx.drawImage(qrCodeImage, (canvas.width - qrSize) / 2, (canvas.height - qrSize) / 2, qrSize, qrSize);
+
+                // Xóa vùng trung tâm để đặt mã QR và logo
+                const xCenter = (canvas.width - logoSize) / 2;
+                const yCenter = (canvas.height - logoSize) / 2;
+                ctx.clearRect(xCenter, yCenter, logoSize, logoSize);
+
+                
+
+                // Vẽ logo chính giữa mã QR
+                const logoImage = new Image();
+                logoImage.src = logoUrl;
+                logoImage.onload = () => {
+                    const logoX = (canvas.width - logoSize) / 2;
+                    const logoY = (canvas.height - logoSize) / 2;
+                    ctx.drawImage(logoImage, logoX, logoY, logoSize, logoSize);
+
+                    // Vẽ thông điệp dưới mã QR
+                    ctx.font = '25px Arial';
+                    ctx.textAlign = 'center';
+                    ctx.fillStyle = 'black';
+                    ctx.fillText(campaign, canvas.width / 2, 50);
+                    
+                    ctx.font = '20px Arial';
+                    ctx.fillStyle = '#000000';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(message, canvas.width / 2, canvas.height - 30);
+                };
+            };
+        };
+
+         // Add event listener to download button
+         document.getElementById('download-btn').addEventListener('click', function() {
+            const canvas = document.getElementById('qrCanvas');
+            const link = document.createElement('a');
+            link.download = 'i-voucher-' + qrcodeText + '.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+    </script>
+</body>
+</html>

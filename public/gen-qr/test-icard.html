@@ -1,0 +1,776 @@
+js-beautify
+(v1.15.1)
+Beautify JavaScript, JSON, React.js, HTML, CSS, SCSS, and SASS
+
+Enable Dark Mode
+
+Beautify JavaScript
+Beautify Code (cmd-enter)
+
+Copy to Clipboard
+ 
+Select All
+ 
+Clear
+ No file chosen
+Options
+
+Indent with 4 spaces
+
+Allow 5 newlines between tokens
+
+Do not wrap lines
+
+Braces with control statement
+HTML <style>, <script> formatting:
+
+
+Add one indent level
+   End script and style with newline?
+Support e4x/jsx syntax
+Use comma-first list style?
+Detect packers and obfuscators? (unsafe)
+Preserve inline braces/code blocks?
+Keep array indentation?
+Break lines on chained methods?
+Space before conditional: "if(x)" / "if (x)"
+Unescape printable chars encoded as \xNN or \uNNNN?
+Use JSLint-happy formatting tweaks?
+Indent <head> and <body> sections?
+Keep indentation on empty lines?
+Use a simple textarea for code input? 
+Additional Settings (JSON):
+
+{}
+Your Selected Options (JSON):
+
+{
+  "indent_size": "4",
+  "indent_char": " ",
+  "max_preserve_newlines": "5",
+  "preserve_newlines": true,
+  "keep_array_indentation": false,
+  "break_chained_methods": false,
+  "indent_scripts": "normal",
+  "brace_style": "collapse",
+  "space_before_conditional": true,
+  "unescape_strings": false,
+  "jslint_happy": false,
+  "end_with_newline": false,
+  "wrap_line_length": "0",
+  "indent_inner_html": false,
+  "comma_first": false,
+  "e4x": false,
+  "indent_empty_lines": false
+}
+Created by Einar Lielmanis, maintained and evolved by Liam Newman.
+
+All of the source code is completely free and open, available on GitHub under MIT licence, and we have a command-line version, python library and a node package as well.
+
+We use the wonderful CodeMirror syntax highlighting editor, written by Marijn Haverbeke.
+
+Made with a great help of many contributors. Special thanks to:
+Jason Diamond, Patrick Hof, Nochum Sossonko, Andreas Schneider, Dave Vasilevsky, Vital Batmanov, Ron Baldwin, Gabriel Harrison, Chris J. Shull, Mathias Bynens, Vittorio Gambaletta, Stefano Sanfilippo and Daniel Stockman.
+
+1
+< html class = "md device-pixel-ratio-0 device-desktop device-macos" > < head >
+2
+    <
+3
+    meta charset = "utf-8" >
+4
+    <
+5
+    !--
+6
+Customize this policy to fit your own app 's needs. For more guidance, see:
+7
+https: //github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+8
+    Some notes:
+9
+    *
+10
+    https: //ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+11
+    *
+12
+    Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities.To change this:
+13
+    *
+14
+    Enable inline JS: add 'unsafe-inline'
+15
+to
+16
+default -src
+17
+-- >
+18
+<
+19
+!-- < meta http - equiv = "Content-Security-Policy"
+20
+content = "default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:" > -- >
+21
+    <
+22
+    !-- < meta http - equiv = "Content-Security-Policy"
+23
+content = "script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" > -- >
+24
+​
+25
+    <
+26
+    meta name = "viewport"
+27
+content = "width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover" >
+28
+​
+29
+    <
+30
+    meta name = "theme-color"
+31
+content = "#fff" >
+32
+    <
+33
+    meta name = "format-detection"
+34
+content = "telephone=no" >
+35
+    <
+36
+    meta name = "msapplication-tap-highlight"
+37
+content = "no" >
+38
+    <
+39
+    title > iShowroom Việt Nam < /title>
+40
+​
+41
+    <
+42
+    meta name = "apple-mobile-web-app-capable"
+43
+content = "yes" >
+44
+    <
+45
+    meta name = "apple-mobile-web-app-status-bar-style"
+46
+content = "black-translucent" >
+47
+    <
+48
+    link rel = "apple-touch-icon"
+49
+href = "icons/apple-touch-icon.png" >
+50
+    <
+51
+    link rel = "icon"
+52
+href = "icons/favicon.png" >
+53
+    <
+54
+    link rel = "manifest"
+55
+href = "assets/manifest.ff313a15.json" >
+56
+​
+57
+    <
+58
+    !--built styles file will be auto injected-- >
+59
+    <
+60
+    script type = "module"
+61
+crossorigin = ""
+62
+src = "assets/index.564189a9.js" > < /script> <
+63
+    link rel = "modulepreload"
+64
+href = "assets/vendor.077b7326.js" >
+65
+    <
+66
+    link rel = "stylesheet"
+67
+href = "assets/index.97065911.css" >
+68
+    <
+69
+    style type = "text/css" > .qr - stream - wrapper[data - v - f73a6250] {
+70
+        width: 100 % ;height: 100 % ;position: relative;z - index: 0
+71
+    }.qr - stream - overlay[data - v - f73a6250] {
+72
+        width: 100 % ;height: 100 % ;position: absolute;top: 0;left: 0
+73
+    }.qr - stream - camera[data - v - f73a6250] {
+74
+        width: 100 % ;height: 100 % ;display: block; - o - object - fit: cover;object - fit: cover
+75
+    } < /style></head >
+76
+    <
+77
+    body >
+78
+    <
+79
+    div id = "app"
+80
+style = "max-width: 480px; margin: 0px auto; height: 100%;"
+81
+data - v - app = "" > < div id = "framework7-root"
+82
+class = "framework7-root" > < div class = "panel-backdrop" > < /div><div class="panel panel-right panel-reveal theme-dark"><div class="view"><div class="page page-previous" data-name="home"><div class="navbar"><div class="navbar-bg"></div > < div class = "navbar-inner" > < !-- -- > < !-- -- > < !-- -- > < !-- -- > < div class = "title sliding" > iShowroom Networks < !-- -- > < /div></div > < /div><!----><div class="page-content"><!----><!----><!----><div class="card"><button class="button button-large button-fill button-round"> Import DS </button > < div > {} < /div></div > < div class = "block block-strong" > < h3 > Cảm ơn đã sử dụng iShowroom Việt Nam < /h3><p>Để biết thêm chi tiết cũng như liên hệ với chúng tôi</p > < a class = "button fill large"
+83
+href = "#" > < !-- -- > < !-- -- > Về trang chủ < /a></div > < div class = "block-footer" > iShowroom v1 .2 .4 < /div><!----><!----></div > < /div><div class="page page-current"><div class="navbar"><div class="navbar-bg"></div > < div class = "navbar-inner sliding" > < !-- -- > < div class = "title" > Right Panel < !-- -- > < /div><!----><!----></div > < /div><!----><div class="page-content"><!----><!----><!----><div class="block">Right panel content goes here</div > < !-- -- > < !-- -- > < /div></div > < /div><!----></div > < div class = "view view-main safe-areas" > < !-- -- > < div class = "page page-previous"
+84
+data - name = "home" > < div class = "navbar" > < div class = "navbar-bg" > < /div><div class="navbar-inner"><!----><!----><!----><!----><div class="title sliding">iShowroom Networks  <!----></div > < /div></div > < !-- -- > < div class = "page-content" > < !-- -- > < !-- -- > < !-- -- > < div class = "card" > < button class = "button button-large button-fill button-round" > Import DS < /button><div>{}</div > < /div><div class="block block-strong"><h3>Cảm ơn đã sử dụng iShowroom Việt Nam</h3 > < p > Để biết thêm chi tiết cũng như liên hệ với chúng tôi < /p><a class="button fill large" href="#"><!----><!---->Về trang chủ</a > < /div><div class="block-footer">iShowroom v1.2.4</div > < !-- -- > < !-- -- > < /div></div > < div class = "page no-navbar page-current" > < div class = "fab fab-center-bottom fab-extended color-green" > < a > < i class = "icon f7-icons" > plus < /i><div class="fab-text">Connect<!----></div > < !-- -- > < /a><!----></div > < div class = "fab fab-right-bottom color-blue" > < a > < i class = "icon f7-icons" > phone_fill < /i><!----><!----></a > < !-- -- > < /div><!----><div class="page-content"><!----><!----><!----><!----><div class="page-content" style="padding-bottom: 100px;"><!----><div class="block" style="margin-top: 5px;"><div class="avatar-picker" style="margin: auto; width: 50%; height: 50%;"><img src="https:/ / apps.vinaas.com / file / tgs5EFo1O "></div><div class="
+85
+block - title block - title - medium " medium="
+86
+true " style="
+87
+text - align: center;
+88
+margin: 10 px;
+89
+">Nguyễn Hoàng Vi</div><div class="
+90
+block - title " medium="
+91
+false " style="
+92
+text - align: center;
+93
+margin: 10 px;
+94
+">Tư vấn giải pháp phần mềm</div><div class="
+95
+block - title " medium="
+96
+false " style="
+97
+text - align: center;
+98
+margin: 10 px;
+99
+">CÔNG TY TNHH ANH VIỆT NHẤT</div><div style="
+100
+text - align: center;
+101
+margin: 10 px;
+102
+"><span>C372M, Đường Bình Nhâm 36, Khu Phố Bình Hòa, Phường Bình Nhâm, Thành phố Thuận An, Tỉnh Bình Dương</span></div></div><div class="
+103
+card "><!----><!----><!----><div class="
+104
+card - content card - content - padding "><div class="
+105
+row "><a class="
+106
+col - 50 button button - round "><i class="
+107
+f7 - icons size - 28 ">envelope</i><span>email</span></a><a class="
+108
+col - 50 button button - round "><i class="
+109
+f7 - icons size - 28 ">link_circle</i><span>website</span></a></div><div class="
+110
+row "><button class="
+111
+col - 60 button button - large button - round button - fill "><i class="
+112
+f7 - icons size - 28 ">phone_fill</i> 0902819409</button><a class="
+113
+col - 40 color - blue button button - round external " href="
+114
+https: //api.qrcare.net/api/Containers/vcard/download/vcard_100010010561077-46.vcf"><i class="icon f7-icons if-not-md" style="color: black;">plus</i><i class="icon material-icons md-only" style="color: black;">add</i><div style="color: black;">Contact</div></a></div><!----><!----><!----><!----></div></div><!----><!----><section style="display: none;"><div class="wrap" data-v-493dd197=""><!----><!----></div><div class="popup popup-tablet-fullscreen" data-v-493dd197="" style="display: none;"><div class="page" data-v-493dd197=""><div class="navbar" data-v-493dd197=""><div class="navbar-bg"></div><div class="navbar-inner sliding"><!----><!----><!----><!----><div class="right" data-v-493dd197=""><a class="link" href="#" data-v-493dd197=""><!----><!---->Close</a></div></div></div><!----><div class="page-content"><!----><!----><!----><div class="block-title" data-v-493dd197="">Preview</div><!----><div class="block" data-v-493dd197=""><div class="block-title" data-v-493dd197="">Update Data</div><div class="list" data-v-493dd197=""><ul stype="margin-bottom:20px" data-v-493dd197=""><li class="item-content" data-v-493dd197=""><label data-v-493dd197=""> Tên cửa hàng, công ty, đội nhóm,...</label></li><div class="text-editor" data-v-493dd197="" style="--f7-text-editor-height: 100px;"><div class="text-editor-content" contenteditable=""></div></div><li class="item-content" data-v-493dd197=""><label data-v-493dd197="">Mô tả thêm về địa chỉ,...</label></li><div class="text-editor" data-v-493dd197="" style="--f7-text-editor-height: 150px;"><div class="text-editor-toolbar"><button type="button" class="text-editor-button" data-button="bold"><i class="material-icons">format_bold</i></button><button type="button" class="text-editor-button" data-button="italic"><i class="material-icons">format_italic</i></button><button type="button" class="text-editor-button" data-button="underline"><i class="material-icons">format_underlined</i></button><div class="text-editor-button-divider"></div><button type="button" class="text-editor-button" data-button="orderedList"><i class="material-icons">format_list_numbered</i></button><button type="button" class="text-editor-button" data-button="unorderedList"><i class="material-icons">format_list_bulleted</i></button><div class="text-editor-button-divider"></div><button type="button" class="text-editor-button" data-button="alignLeft"><i class="material-icons">format_align_left</i></button><button type="button" class="text-editor-button" data-button="alignCenter"><i class="material-icons">format_align_center</i></button><button type="button" class="text-editor-button" data-button="alignRight"><i class="material-icons">format_align_right</i></button></div><div class="text-editor-content" contenteditable=""><div class="text-editor-placeholder">địa chỉ, hotline,...</div></div></div></ul></div><div class="row" data-v-493dd197=""><div class="col-20" data-v-493dd197=""></div><div class="col-60" data-v-493dd197=""><button class="button button-round button-large button-fill" data-v-493dd197=""> Save </button></div><div class="col-20" data-v-493dd197=""></div></div></div><!----><!----></div></div></div><div class="wrap" data-v-66b9e80e=""><!----><div class="block" data-v-66b9e80e="" style="margin-top: 5px; margin-bottom: 0px;"><!----><img src="" data-v-66b9e80e="" style="max-width: 100%; height: auto;"><div id="content-image" data-v-66b9e80e=""></div></div><!----></div><div class="popup popup-tablet-fullscreen" id="iblock" data-v-66b9e80e="" style="display: none;"><div class="page" data-v-66b9e80e=""><div class="navbar" data-v-66b9e80e=""><div class="navbar-bg"></div><div class="navbar-inner sliding"><!----><div class="title"> Edit Content <!----></div><!----><!----><div class="right" data-v-66b9e80e=""><a class="link" href="#" data-v-66b9e80e=""><!----><!---->Close</a></div></div></div><!----><div class="page-content"><!----><!----><!----><!----><div class="wrap" data-v-6331429b="" data-v-66b9e80e=""><div class="block" data-v-6331429b=""><div class="row" data-v-6331429b="" style="min-height: 200px;"><img src="https://apps.vinaas.com/file/qRa7o3Xw9" data-v-6331429b="" style="max-width: 100%; height: auto;"><!----></div></div><div class="image-edit" data-v-6331429b=""><div class="row" data-v-6331429b=""><button class="bg-color-gray button button-round button-large button-fill" data-v-6331429b="" style="width: 50px; margin-right: 20px;"><i class="f7-icons" data-v-6331429b="">xmark_circle</i></button><div class="avatar-picker" data-v-6331429b=""><label><input type="file" accept="image/png,image/gif,image/jpeg"><i class="icon f7-icons if-md">camera</i></label></div></div></div></div><div class="card" data-v-66b9e80e=""><div class="card-header" data-v-66b9e80e="">Nội dung giới thiệu</div></div><div class="text-editor" data-v-66b9e80e="" style="--f7-text-editor-height: 400px;"><div class="text-editor-toolbar"><button type="button" class="text-editor-button" data-button="bold"><i class="material-icons">format_bold</i></button><button type="button" class="text-editor-button" data-button="italic"><i class="material-icons">format_italic</i></button><button type="button" class="text-editor-button" data-button="underline"><i class="material-icons">format_underlined</i></button><div class="text-editor-button-divider"></div><button type="button" class="text-editor-button" data-button="orderedList"><i class="material-icons">format_list_numbered</i></button><button type="button" class="text-editor-button" data-button="unorderedList"><i class="material-icons">format_list_bulleted</i></button><div class="text-editor-button-divider"></div><button type="button" class="text-editor-button" data-button="image"><i class="material-icons">image</i></button><div class="text-editor-button-divider"></div><button type="button" class="text-editor-button" data-button="paragraph"><i class="icon">¶</i></button><button type="button" class="text-editor-button" data-button="h2"><i class="icon">H<sub>2</sub></i></button><button type="button" class="text-editor-button" data-button="h3"><i class="icon">H<sub>3</sub></i></button><div class="text-editor-button-divider"></div><button type="button" class="text-editor-button" data-button="alignLeft"><i class="material-icons">format_align_left</i></button><button type="button" class="text-editor-button" data-button="alignCenter"><i class="material-icons">format_align_center</i></button><button type="button" class="text-editor-button" data-button="alignRight"><i class="material-icons">format_align_right</i></button></div><div class="text-editor-content" contenteditable=""><div class="text-editor-placeholder">Enter text...</div></div></div><!----><div class="block row" data-v-66b9e80e=""><div class="col-20" data-v-66b9e80e=""></div><div class="col-60" data-v-66b9e80e=""><button class="button button-round button-large button-fill" data-v-66b9e80e=""> Save </button></div><div class="col-20" data-v-66b9e80e=""></div></div><!----><!----></div></div></div><div></div></section><div class="block"><div class="row"><button class="button button-large button-round button-outline"> Cập nhật thông tin</button></div><div class="block-title" medium="false" style="text-align: center; margin-top: 0px;"> ID: 10001001056.1077</div></div></div><!----><!----></div></div><div class="popup popup-tablet-fullscreen" style="display: none;"><div class="page"><div class="navbar"><div class="navbar-bg"></div><div class="navbar-inner sliding"><!----><!----><!----><!----><div class="right"><a class="link" href="#"><!----><!---->Close</a></div></div></div><!----><div class="page-content"><!----><!----><!----><div class="block"><div class="block-footer" style="text-align: center; margin-top: 0px;">Kết nối thông qua quét qrcode màu xanh</div><button class="button button-large button-round button-fill"> Connect </button></div><div class="card"><div class="card-header bg-color-green">Chưa có kết nối</div><div class="list media-list medium-inset"><ul></ul></div></div><!----><!----></div></div><div class="popup popup-tablet-fullscreen" style="display: none;"><div class="page"><div class="navbar"><div class="navbar-bg"></div><div class="navbar-inner sliding"><!----><!----><!----><!----><div class="right"><a class="link" href="#"><!----><!---->Close</a></div></div></div><!----><div class="page-content"><!----><!----><!----><div class="block"><button class="button button-large button-round button-fill"> Connect </button><div class="block-footer" style="text-align: center; margin-top: 0px;">với khách mời có qrcode xanh tròn</div></div><div class="card"><div class="card-header bg-color-green">Chưa có</div><div class="list media-list medium-inset"><ul></ul></div></div><!----><!----></div></div></div><div class="popup popup-tablet-fullscreen" style="display: none;"><div class="page"><div class="navbar"><div class="navbar-bg"></div><div class="navbar-inner sliding"><!----><!----><!----><!----><div class="right"><a class="link" href="#"><!----><!---->Close</a></div></div></div><!----><div class="page-content"><!----><!----><!----><div class="block"><!----><div class="list"><ul><li class="item-content item-input"><div class="item-inner"><div class="item-title item-label">QRCode Xanh</div><div class="item-input-wrap"><input type="text"><span class="input-clear-button"></span></div></div></li><li class="item-content item-input"><div class="block-title">ID: </div></li><li class="item-content"><div class="block-title">Message: </div></li></ul></div><div class="row"><div class="col-60"><div class="button button-large button-round button-fill"> Kết quả </div></div><div class="col-30"><div class="button button-large button-round button-outline">Close </div></div><div class="block-title"></div><div class="block-title">{
+115
+    "id": "",
+116
+    "index": "",
+117
+    "privateCode": "",
+118
+    "type": "",
+119
+    "enable": ""
+120
+} < /div></div > < /div><!----><!----></div > < /div></div > < div class = "popup popup-tablet-fullscreen"
+121
+style = "display: none;" > < div class = "navbar" > < div class = "navbar-bg" > < /div><div class="navbar-inner sliding"><!----><div class="title"> Connect with <!----></div > < !-- -- > < !-- -- > < div class = "right" > < a class = "link"
+122
+href = "#" > < !-- -- > < !-- -- > Close < /a></div > < /div></div > < div class = "page" > < !-- -- > < div class = "page-content" > < !-- -- > < !-- -- > < !-- -- > < div class = "page-content" > < section > < div class = "card card-header" > Checkin at < /div><div class="card bg-color-green" style="margin-top: 5px; margin-bottom: 0px; padding: 10px; text-align: center;"><div class="block-title-medium"></div > < !-- -- > < /div><i-block-content data="[object Object]" showtitle="false" isview="true" showbutton="false"></i - block - content > < /section></div > < !-- -- > < !-- -- > < /div></div > < /div></div > < /div><div class="popup" id="my-popup"><div class="view"><div class="page page-previous" data-name="home"><div class="navbar"><div class="navbar-bg"></div > < div class = "navbar-inner" > < !-- -- > < !-- -- > < !-- -- > < !-- -- > < div class = "title sliding" > iShowroom Networks < !-- -- > < /div></div > < /div><!----><div class="page-content"><!----><!----><!----><div class="card"><button class="button button-large button-fill button-round"> Import DS </button > < div > {} < /div></div > < div class = "block block-strong" > < h3 > Cảm ơn đã sử dụng iShowroom Việt Nam < /h3><p>Để biết thêm chi tiết cũng như liên hệ với chúng tôi</p > < a class = "button fill large"
+123
+href = "#" > < !-- -- > < !-- -- > Về trang chủ < /a></div > < div class = "block-footer" > iShowroom v1 .2 .4 < /div><!----><!----></div > < /div><div class="page page-current"><div class="navbar"><div class="navbar-bg"></div > < div class = "navbar-inner sliding" > < !-- -- > < div class = "title" > Popup < !-- -- > < /div><!----><!----><div class="right"><a class="link popup-close" href="#"><!----><!---->Close</a > < /div></div > < /div><!----><div class="page-content"><!----><!----><!----><div class="block"><p>Popup content goes here.</p > < /div><!----><!----></div > < /div></div > < /div><div class="login-screen" id="my-login-screen"><div class="view"><div class="page page-previous" data-name="home"><div class="navbar"><div class="navbar-bg"></div > < div class = "navbar-inner" > < !-- -- > < !-- -- > < !-- -- > < !-- -- > < div class = "title sliding" > iShowroom Networks < !-- -- > < /div></div > < /div><!----><div class="page-content"><!----><!----><!----><div class="card"><button class="button button-large button-fill button-round"> Import DS </button > < div > {} < /div></div > < div class = "block block-strong" > < h3 > Cảm ơn đã sử dụng iShowroom Việt Nam < /h3><p>Để biết thêm chi tiết cũng như liên hệ với chúng tôi</p > < a class = "button fill large"
+124
+href = "#" > < !-- -- > < !-- -- > Về trang chủ < /a></div > < div class = "block-footer" > iShowroom v1 .2 .4 < /div><!----><!----></div > < /div><div class="page login-screen-page page-current"><!----><div class="page-content login-screen-content"><!----><!----><!----><div class="login-screen-title">Login</div > < a class = "button"
+125
+href = "/login/" > < !-- -- > < !-- -- > quet < /a><form class="list"><!----><ul><li class=""><!----><div class="item-content item-input"><!----><!----><div class="item-inner"><!----><!----><div class="item-input-wrap"><input name="username" type="text" placeholder="Your username" class=""><!----><!----><!----><!----></div > < !-- -- > < !-- -- > < /div><!----><!----></div > < !-- -- > < !-- -- > < !-- -- > < /li><li class=""><!----><div class="item-content item-input"><!----><!----><div class="item-inner"><!----><!----><div class="item-input-wrap"><input name="password" type="password" placeholder="Your password" class=""><!----><!----><!----><!----></div > < !-- -- > < !-- -- > < /div><!----><!----></div > < !-- -- > < !-- -- > < !-- -- > < /li></ul > < !-- -- > < /form><div class="list"><!----><ul><li><a class="list-button" href="#" data-tab="false">Sign In  </a > < /li></ul > < !-- -- > < div class = "block-footer" > Some text about login information. < br > Click "Sign In"
+126
+to close Login Screen < /div></div > < !-- -- > < !-- -- > < /div></div > < /div></div > < div class = "framework7-modals" > < /div><div class="popup-backdrop"></div > < div class = "dialog-backdrop" > < /div><div class="popup popup-tablet-fullscreen modal-out" id="edit" style="display: none;"><div class="page"><!----><div class="page-content"><!----><!----><!----><div data-v-73e4a191=""><!----><div data-v-73e4a191=""><div class="avatar-picker avatar-center" data-v-73e4a191=""><img src="https:/ / apps.vinaas.com / file / tgs5EFo1O "><label><input type="
+127
+file " accept="
+128
+image / png, image / gif, image / jpeg "><i class="
+129
+icon f7 - icons
+130
+if -not - md ">camera_fill</i><i class="
+131
+icon f7 - icons
+132
+if -md ">camera</i></label></div><div data-v-73e4a191="
+133
+" style="
+134
+text - align: center;
+135
+">Chọn hình danh thiếp</div></div><div class="
+136
+card " data-v-73e4a191="
+137
+"><!----><!----><!----><div class="
+138
+card - header bg - color - green " data-v-73e4a191="
+139
+">Thông tin cá nhân - Information</div><div class="
+140
+list no - hairlines - md " data-v-73e4a191="
+141
+"><!----><ul><li data-v-73e4a191="
+142
+"><li class="
+143
+" data-v-73e4a191="
+144
+"><!----><div class="
+145
+item - content item - input item - input - outline item - input - with - value "><!----><!----><div class="
+146
+item - inner "><!----><div class="
+147
+item - title item - label item - floating - label ">Tên - First/Given name<!----></div><div class="
+148
+item - input - wrap "><input type="
+149
+text " maxlength="
+150
+50 " required="
+151
+" class="
+152
+input - with - value "><!----><!----><span class="
+153
+input - clear - button "></span><!----></div><!----><!----></div><!----><!----></div><!----><!----><!----></li><li class="
+154
+" data-v-73e4a191="
+155
+"><!----><div class="
+156
+item - content item - input item - input - outline item - input - with - info item - input - with - value "><!----><!----><div class="
+157
+item - inner "><!----><div class="
+158
+item - title item - label item - floating - label ">Họ và tên đệm - Last/Family name<!----></div><div class="
+159
+item - input - wrap "><input type="
+160
+text " maxlength="
+161
+50 " class="
+162
+input - with - value "><!----><!----><span class="
+163
+input - clear - button "></span><div class="
+164
+item - input - info ">tuỳ chọn (option)<!----></div></div><!----><!----></div><!----><!----></div><!----><!----><!----></li></li><li class="
+165
+" data-v-73e4a191="
+166
+"><!----><div class="
+167
+item - content item - input item - input - outline item - input - with - info item - input - with - value "><!----><!----><div class="
+168
+item - inner "><!----><div class="
+169
+item - title item - label item - floating - label ">Chức danh - Title<!----></div><div class="
+170
+item - input - wrap "><input type="
+171
+text " maxlength="
+172
+50 " class="
+173
+input - with - value "><!----><!----><span class="
+174
+input - clear - button "></span><div class="
+175
+item - input - info ">Giám đốc, kỹ sư<!----></div></div><!----><!----></div><!----><!----></div><!----><!----><!----></li><li class="
+176
+" data-v-73e4a191="
+177
+"><!----><div class="
+178
+item - content item - input item - input - outline item - input - with - info item - input - with - value "><!----><!----><div class="
+179
+item - inner "><!----><div class="
+180
+item - title item - label item - floating - label ">Đơn vị - Organization<!----></div><div class="
+181
+item - input - wrap "><input type="
+182
+text " placeholder="
+183
+" maxlength="
+184
+50 " class="
+185
+input - with - value "><!----><!----><span class="
+186
+input - clear - button "></span><div class="
+187
+item - input - info ">Công ty, cơ quan đang làm việc<!----></div></div><!----><!----></div><!----><!----></div><!----><!----><!----></li><li class="
+188
+" data-v-73e4a191="
+189
+"><!----><div class="
+190
+item - content item - input item - input - outline item - input - with - value "><!----><!----><div class="
+191
+item - inner "><!----><div class="
+192
+item - title item - label item - floating - label ">Số điện thoại - Phone Number<!----></div><div class="
+193
+item - input - wrap "><input type="
+194
+text " placeholder="
+195
+" pattern=" [0 - 9] * " class="
+196
+input - with - value "><!----><!----><span class="
+197
+input - clear - button "></span><!----></div><!----><!----></div><!----><!----></div><!----><!----><!----></li></ul><!----></div><div class="
+198
+block - title " medium="
+199
+false " data-v-73e4a191="
+200
+">Liên kết cá nhân</div><div class="
+201
+list no - hairlines - md " data-v-73e4a191="
+202
+"><ul data-v-73e4a191="
+203
+"><li class="
+204
+item - content item - input " data-v-73e4a191="
+205
+"><a class="
+206
+item - media " data-v-73e4a191="
+207
+"><i class="
+208
+f7 - icons size - 40 " data-v-73e4a191="
+209
+">envelope</i></a><div class="
+210
+item - inner " data-v-73e4a191="
+211
+"><div class="
+212
+item - title item - label " data-v-73e4a191="
+213
+">email<a style="
+214
+float: right;
+215
+"><i class="
+216
+f7 - icons size - 22 ">info_circle</i></a><div class="
+217
+popup popup - tablet - fullscreen " style="
+218
+display: none;
+219
+"><div class="
+220
+page "><div class="
+221
+navbar "><div class="
+222
+navbar - bg "></div><div class="
+223
+navbar - inner "><!----><!----><!----><!----><div class="
+224
+title sliding ">Chưa có hướng dẫn  <!----></div><div class="
+225
+right "><a class="
+226
+link " href="
+227
+# "><!----><!---->Close</a></div></div></div><!----><div class="
+228
+page - content "><!----><!----><!----><div class="
+229
+block strong "><div class="
+230
+block - content "><div>Chúng tôi sẽ cập nhật thêm nội dung này</div></div></div><!----><!----><!----></div></div></div></div><div class="
+231
+item - input - wrap " data-v-73e4a191="
+232
+"><input type="
+233
+text " placeholder="
+234
+xxxxx @gmail.com " data-v-73e4a191="
+235
+"><span class="
+236
+input - clear - button " data-v-73e4a191="
+237
+"></span></div></div></li><li class="
+238
+item - content item - input " data-v-73e4a191="
+239
+"><a class="
+240
+item - media " data-v-73e4a191="
+241
+"><img src=" / assets / zalo.png " width="
+242
+30 " data-v-73e4a191="
+243
+"></a><div class="
+244
+item - inner " data-v-73e4a191="
+245
+"><div class="
+246
+item - title item - label " data-v-73e4a191="
+247
+">zalo<a style="
+248
+float: right;
+249
+"><i class="
+250
+f7 - icons size - 22 ">info_circle</i></a><div class="
+251
+popup popup - tablet - fullscreen " style="
+252
+display: none;
+253
+"><div class="
+254
+page "><div class="
+255
+navbar "><div class="
+256
+navbar - bg "></div><div class="
+257
+navbar - inner "><!----><!----><!----><!----><div class="
+258
+title sliding ">Chưa có hướng dẫn  <!----></div><div class="
+259
+right "><a class="
+260
+link " href="
+261
+# "><!----><!---->Close</a></div></div></div><!----><div class="
+262
+page - content "><!----><!----><!----><div class="
+263
+block strong "><div class="
+264
+block - content "><div>Chúng tôi sẽ cập nhật thêm nội dung này</div></div></div><!----><!----><!----></div></div></div></div><div class="
+265
+item - input - wrap " data-v-73e4a191="
+266
+"><input type="
+267
+text " placeholder="
+268
+083 xxxx phone number " data-v-73e4a191="
+269
+"><span class="
+270
+input - clear - button " data-v-73e4a191="
+271
+"></span></div></div></li><li class="
+272
+item - content item - input " data-v-73e4a191="
+273
+"><a class="
+274
+item - media " data-v-73e4a191="
+275
+"><i class="
+276
+f7 - icons size - 40 " data-v-73e4a191="
+277
+">link_circle</i></a><div class="
+278
+item - inner " data-v-73e4a191="
+279
+"><div class="
+280
+item - title item - label " data-v-73e4a191="
+281
+">website<a style="
+282
+float: right;
+283
+"><i class="
+284
+f7 - icons size - 22 ">info_circle</i></a><div class="
+285
+popup popup - tablet - fullscreen " style="
+286
+display: none;
+287
+"><div class="
+288
+page "><div class="
+289
+navbar "><div class="
+290
+navbar - bg "></div><div class="
+291
+navbar - inner "><!----><!----><!----><!----><div class="
+292
+title sliding ">Chưa có hướng dẫn  <!----></div><div class="
+293
+right "><a class="
+294
+link " href="
+295
+# "><!----><!---->Close</a></div></div></div><!----><div class="
+296
+page - content "><!----><!----><!----><div class="
+297
+block strong "><div class="
+298
+block - content "><div>Chúng tôi sẽ cập nhật thêm nội dung này</div></div></div><!----><!----><!----></div></div></div></div><div class="
+299
+item - input - wrap " data-v-73e4a191="
+300
+"><input type="
+301
+text " placeholder="
+302
+link of personal blog, profile " data-v-73e4a191="
+303
+"><span class="
+304
+input - clear - button " data-v-73e4a191="
+305
+"></span></div></div></li></ul></div><div class="
+306
+block - title " medium="
+307
+false " data-v-73e4a191="
+308
+" style="
+309
+display: none;
+310
+">Thanh toán cá nhân</div><div class="
+311
+list no - hairlines - md " data-v-73e4a191="
+312
+" style="
+313
+display: none;
+314
+"><ul data-v-73e4a191="
+315
+"><li class="
+316
+item - content item - input " data-v-73e4a191="
+317
+"><div class="
+318
+item - media " data-v-73e4a191="
+319
+"><img src=" / assets / momo.png " width="
+320
+30 " data-v-73e4a191="
+321
+"></div><div class="
+322
+item - inner " data-v-73e4a191="
+323
+"><div class="
+324
+item - title item - label " data-v-73e4a191="
+325
+">momo <a style="
+326
+float: right;
+327
+"><i class="
+328
+f7 - icons size - 22 ">info_circle</i></a><div class="
+329
+popup popup - tablet - fullscreen " style="
+330
+display: none;
+331
+"><div class="
+332
+page "><div class="
+333
+navbar "><div class="
+334
+navbar - bg "></div><div class="
+335
+navbar - inner "><!----><!----><!----><!----><div class="
+336
+title sliding ">Chưa có hướng dẫn  <!----></div><div class="
+337
+right "><a class="
+338
+link " href="
+339
+# "><!----><!---->Close</a></div></div></div><!----><div class="
+340
+page - content "><!----><!----><!----><div class="
+341
+block strong "><div class="
+342
+block - content "><div>Chúng tôi sẽ cập nhật thêm nội dung này</div></div></div><!----><!----><!----></div></div></div></div><div class="
+343
+item - input - wrap " data-v-73e4a191="
+344
+"><input type="
+345
+text " placeholder="
+346
+https: //me.momo.vn/qr-page/..." data-v-73e4a191=""><span class="input-clear-button" data-v-73e4a191=""></span></div></div></li></ul></div></div><!----><!----><div class="block" data-v-73e4a191=""><div class="row" data-v-73e4a191=""><div class="col-100" data-v-73e4a191=""><button class="button button-large button-round button-fill" data-v-73e4a191=""> Cập nhật </button></div><!----></div></div></div><!----><!----></div></div></div></div></div>
+347
+​
+348
+​
+349
+​
+350
+    <
+351
+    /body></html >
