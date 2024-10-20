@@ -37,16 +37,27 @@
             const params = new URLSearchParams(window.location.search);
             return {
                 qrcode: params.get('qrcode') || '123456',
-                campaign: params.get('campaign') || 'Default Campaign',
+                campaign: params.get('campaign') || 'Voucher CHABAR',
                 logoUrl: params.get('logo-url') || 'logo.png',
-                message: params.get('message') || 'Default message'
+                message: params.get('message') || 'Dành tặng riêng bạn',
+                message2: params.get('message2') || 'Giảm 0% tối đa 50k',
+                from: params.get('from') || '01/01/'+new Date().getFullYear() ,
+                to: params.get('to') || '31/12/2024'+new Date().getFullYear() 
             };
         }
 
         console.log("222");
 
         // Function to draw QR code
-        function drawQRCodeWithLogo(qrText, campaignText, logoUrl, messageText) {
+        function drawQRCodeWithLogo(params) {
+            qrText = params.qrcode;
+            campaignText = params.campaign;
+            logoUrl=  params.logoUrl;
+            messageText =  params.message;
+            message2Text =  params.message2;
+            fromText =  params.from;
+            toText =  params.to;
+            
             const canvas = document.getElementById('canvas');
             const ctx = canvas.getContext('2d');
 
@@ -152,11 +163,19 @@
                 ctx.font = '25px Arial';
                 ctx.textAlign = 'center';
                 ctx.fillStyle = 'black';
-                ctx.fillText(campaignText, canvas.width / 2, 70);
+                ctx.fillText(campaignText, canvas.width / 2, 55);
 
                 // Draw the message text below the QR code
                 ctx.font = '20px Arial';
                 ctx.fillText(messageText, canvas.width / 2, 450); // Adjust position to be below QR code
+
+                ctx.font = '16px Arial';
+                ctx.fillText(message2Text, canvas.width / 2, 490); // Adjust position to be below QR code
+                
+                ctx.textAlign = 'left';
+                ctx.fillText("Từ ngày: " + fromText, 10, 570); // Adjust position to be below QR code
+                ctx.textAlign = 'right';
+                ctx.fillText("Đến ngày: " + toText, canvas.width-10, 570); // Adjust position to be below QR code
             };
         }
 
@@ -164,7 +183,7 @@
         const params = getQueryParams();
 
         // Draw the QR code with logo, title, and message
-        drawQRCodeWithLogo(params.qrcode, params.campaign, params.logoUrl, params.message);
+        drawQRCodeWithLogo(params);
 
         // Add event listener to download button
         document.getElementById('download-btn').addEventListener('click', function() {
